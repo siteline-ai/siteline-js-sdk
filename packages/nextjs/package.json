@@ -1,0 +1,94 @@
+{
+  "name": "@siteline/nextjs",
+  "version": "1.0.0",
+  "description": "Official Next.js integration for Siteline - automatic AI agent and bot tracking with zero configuration",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./node": {
+      "import": "./dist/node.mjs",
+      "require": "./dist/node.cjs",
+      "types": "./dist/node.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "rollup -c && tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist",
+    "dev": "rollup -c -w",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@siteline/core": "^1.0.0"
+  },
+  "peerDependencies": {
+    "next": ">=13.0.0"
+  },
+  "keywords": [
+    "nextjs",
+    "next",
+    "siteline",
+    "agent-analytics",
+    "ai-agents",
+    "bot-detection",
+    "crawler-tracking",
+    "openai",
+    "perplexity",
+    "anthropic",
+    "google-bot",
+    "llm",
+    "ai-visibility",
+    "middleware",
+    "edge",
+    "typescript",
+    "app-router",
+    "pages-router",
+    "vercel",
+    "cloudflare",
+    "analytics",
+    "monitoring"
+  ],
+  "author": "Siteline <support@siteline.io> (https://siteline.io)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteline-ai/siteline-sdk-js",
+    "directory": "packages/nextjs"
+  },
+  "bugs": {
+    "url": "https://github.com/siteline-ai/siteline-sdk-js/issues"
+  },
+  "homepage": "https://github.com/siteline-ai/siteline-sdk-js/tree/main/packages/nextjs#readme",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@types/node": "^20.11.5",
+    "jest-environment-jsdom": "^30.2.0",
+    "next": "*"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": false
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

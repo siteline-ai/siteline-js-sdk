@@ -1,1 +1,30 @@
-examples
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Config files
+tsconfig.json
+rollup.config.mjs
+.eslintrc.json
+.prettierrc.json
+
+# Development files
+examples/
+.github/
+.vscode/
+
+# Git files
+.git/
+.gitignore
+
+# Environment
+.env*
+
+# Build artifacts
+*.tsbuildinfo
+
+# Test files
+**/*.test.ts
+**/*.spec.ts
+coverage/

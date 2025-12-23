@@ -1,0 +1,241 @@
+name: Security
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  issues: write
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      has-vulnerabilities: ${{ steps.audit.outputs.vulnerabilities }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run security audit
+        id: audit
+        run: |
+          npm audit --audit-level=moderate --json > audit-results.json || true
+
+          if jq -e '.metadata.vulnerabilities.moderate > 0 or .metadata.vulnerabilities.high > 0 or .metadata.vulnerabilities.critical > 0' audit-results.json >/dev/null 2>&1; then
+            echo "vulnerabilities=true" >> $GITHUB_OUTPUT
+          else
+            echo "vulnerabilities=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload audit results
+        if: steps.audit.outputs.vulnerabilities == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-results
+          path: audit-results.json
+          retention-days: 30
+
+      - name: Generate audit summary
+        run: |
+          {
+            echo "## Dependency Audit Results"
+            echo ""
+            if [[ "${{ steps.audit.outputs.vulnerabilities }}" == "true" ]]; then
+              echo "**Status**: Vulnerabilities detected"
+              echo ""
+              jq -r '.metadata.vulnerabilities | "- Critical: \(.critical)\n- High: \(.high)\n- Moderate: \(.moderate)\n- Low: \(.low)"' audit-results.json
+            else
+              echo "**Status**: No vulnerabilities found"
+            fi
+          } >> $GITHUB_STEP_SUMMARY
+
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+          extra_args: --only-verified
+
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Check licenses
+        run: |
+          npx license-checker --summary --production --excludePrivatePackages > licenses.txt || true
+          cat licenses.txt
+
+      - name: Upload license report
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-report
+          path: licenses.txt
+          retention-days: 90
+
+  sbom-generation:
+    name: SBOM Generation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Generate SBOMs
+        run: |
+          mkdir -p sbom
+          for pkg in core nextjs; do
+            cd "packages/$pkg"
+            npm sbom --sbom-format=cyclonedx > "../../sbom/sbom-${pkg}.json"
+            cd ../..
+          done
+
+      - name: Upload SBOMs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom/*.json
+          retention-days: 90
+
+  scorecard:
+    name: OSSF Scorecard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      security-events: write
+      id-token: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Run Scorecard analysis
+        uses: ossf/scorecard-action@v2
+        with:
+          results_file: scorecard-results.sarif
+          results_format: sarif
+          publish_results: true
+
+      - name: Upload to code-scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: scorecard-results.sarif
+
+  report:
+    name: Security Report
+    if: always()
+    needs: [dependency-audit, secret-scan, license-check, sbom-generation, scorecard]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Create security issue
+        if: needs.dependency-audit.outputs.has-vulnerabilities == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `## Security Alert
+
+            Vulnerabilities detected in scheduled security scan.
+
+            **Actions Required:**
+            1. Review the audit results in the workflow artifacts
+            2. Run \`npm audit\` locally for detailed information
+            3. Apply fixes with \`npm audit fix\` or update dependencies manually
+            4. Test thoroughly after applying fixes
+
+            **Scan Details:**
+            - Workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            - Detected: ${new Date().toISOString()}`;
+
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'security'
+            });
+
+            const existingIssue = issues.data.find(issue =>
+              issue.title.includes('Security Alert')
+            );
+
+            if (!existingIssue) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Security Alert: Vulnerabilities Detected',
+                body,
+                labels: ['security', 'dependencies']
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `New vulnerabilities detected.\n\n${body}`
+              });
+            }
+
+      - name: Generate summary
+        run: |
+          {
+            echo "## Weekly Security Scan Complete"
+            echo ""
+            echo "**Scan Date**: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            echo ""
+            echo "### Results"
+            echo "- Dependency Audit: ${{ needs.dependency-audit.result }}"
+            echo "- Secret Scan: ${{ needs.secret-scan.result }}"
+            echo "- License Check: ${{ needs.license-check.result }}"
+            echo "- SBOM Generation: ${{ needs.sbom-generation.result }}"
+            echo "- OSSF Scorecard: ${{ needs.scorecard.result }}"
+            echo ""
+            if [[ "${{ needs.dependency-audit.outputs.has-vulnerabilities }}" == "true" ]]; then
+              echo "**Action Required**: Review and fix dependency vulnerabilities"
+            else
+              echo "**Status**: All security checks passed"
+            fi
+          } >> $GITHUB_STEP_SUMMARY

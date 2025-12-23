@@ -41,3 +41,7 @@ Thumbs.db
 .cache/
 coverage/
 .nyc_output/
+
+# Changesets
+.changeset/*.md
+!.changeset/README.md
