@@ -76,7 +76,7 @@ jobs:
       - name: TruffleHog scan
         uses: trufflesecurity/trufflehog@main
         with:
-          extra_args: --only-verified git file://. --since-commit ""
+          extra_args: --results=verified,unknown
 
   license-check:
     name: License Compliance
