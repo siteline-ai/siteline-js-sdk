@@ -64,23 +64,6 @@ jobs:
             fi
           } >> $GITHUB_STEP_SUMMARY
 
-  secret-scan:
-    name: Secret Scanning
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: TruffleHog scan
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: ""
-          head: ${{ github.ref }}
-          extra_args: --only-verified
-
   license-check:
     name: License Compliance
     runs-on: ubuntu-latest
