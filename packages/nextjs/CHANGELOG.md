@@ -1,5 +1,14 @@
 # @siteline/nextjs
 
+## 1.0.1
+
+### Patch Changes
+
+- [#3](https://github.com/siteline-ai/siteline-sdk-js/pull/3) [`8a11963`](https://github.com/siteline-ai/siteline-sdk-js/commit/8a119638b9fb31133677092d80066ff68b545847) Thanks [@antoineaudrain](https://github.com/antoineaudrain)! - clean up README and fix examples
+
+- Updated dependencies [[`8a11963`](https://github.com/siteline-ai/siteline-sdk-js/commit/8a119638b9fb31133677092d80066ff68b545847)]:
+  - @siteline/core@1.0.1
+
 ## 1.0.0
 
 Initial release
