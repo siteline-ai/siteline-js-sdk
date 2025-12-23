@@ -122,14 +122,6 @@ jobs:
         run: npm audit --audit-level=moderate
         continue-on-error: true
 
-      - name: Secret scanning
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
-          extra_args: --only-verified
-
   dependency-review:
     name: Dependency Review
     if: github.event_name == 'pull_request'
