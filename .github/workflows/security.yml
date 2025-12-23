@@ -76,7 +76,7 @@ jobs:
       - name: TruffleHog scan
         uses: trufflesecurity/trufflehog@main
         with:
-          extra_args: --results=verified,unknown
+          extra_args: --only-verified --since-commit="" --branch HEAD filesystem .
 
   license-check:
     name: License Compliance
