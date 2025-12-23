@@ -16,9 +16,9 @@ const initSiteline = (cfg?: SitelineConfig) => {
   hasInitialized = true;
 
   config = {
-    websiteKey: cfg?.websiteKey ?? process.env[ENV_VARS.WEBSITE_KEY] ?? '',
-    endpoint: cfg?.endpoint ?? process.env[ENV_VARS.ENDPOINT],
-    debug: cfg?.debug ?? process.env[ENV_VARS.DEBUG] === 'true',
+    websiteKey: cfg?.websiteKey ?? ENV_VARS.DEFAULT_WEBSITE_KEY ?? '',
+    endpoint: cfg?.endpoint ?? ENV_VARS.DEFAULT_ENDPOINT,
+    debug: cfg?.debug ?? ENV_VARS.DEFAULT_DEBUG === 'true',
   };
 
   if (!config.websiteKey) {

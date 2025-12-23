@@ -65,7 +65,7 @@ Creates a new Client tracker instance.
 ```typescript
 type SitelineConfig = {
   websiteKey: string;    // Required: Your Client website key (format: siteline_secret_<32 hex chars>)
-  endpoint?: string;     // Optional: Custom API endpoint (default: https://api.siteline.io/v1/intake/pageview)
+  endpoint?: string;     // Optional: Custom API endpoint (default: https://api.siteline.ai/v1/intake/pageview)
   debug?: boolean;       // Optional: Enable debug logging (default: false)
 };
 ```
@@ -168,7 +168,7 @@ const tracker = new Client({
 
 siteline.track({...});
 // Console output:
-// [Client] Client initialized { endpoint: 'https://api.siteline.io/v1/intake/pageview' }
+// [Client] Client initialized { endpoint: 'https://api.siteline.ai/v1/intake/pageview' }
 // [Client] Tracked: /home
 ```
 
@@ -230,6 +230,6 @@ MIT
 
 ## Support
 
-- **GitHub Issues**: [github.com/siteline/siteline-sdk-js/issues](https://github.com/siteline-ai/siteline-sdk-js/issues)
-- **Documentation**: [docs.siteline.io](https://docs.siteline.io)
-- **Repository**: [github.com/siteline/siteline-sdk-js](https://github.com/siteline-ai/siteline-sdk-js)
+- **GitHub Issues**: [github.com/siteline-ai/siteline-sdk-js/issues](https://github.com/siteline-ai/siteline-sdk-js/issues)
+- **Documentation**: [docs.gptrends.io/agent-analytics](https://docs.gptrends.io/agent-analytics)
+- **Repository**: [github.com/siteline-ai/siteline-sdk-js](https://github.com/siteline-ai/siteline-sdk-js)

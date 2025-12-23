@@ -152,7 +152,7 @@ Setup: See [NPM_OIDC_SETUP.md](./NPM_OIDC_SETUP.md) for detailed instructions
 Quick setup:
 1. Go to npm package settings: https://www.npmjs.com/package/@siteline/core/access
 2. Configure GitHub Actions as trusted publisher
-3. Repository: `siteline/siteline-sdk-js`
+3. Repository: `siteline-ai/siteline-sdk-js`
 4. Workflow: `release.yml`
 
 ### Option 2: NPM_TOKEN (Fallback)

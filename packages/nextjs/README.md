@@ -89,7 +89,7 @@ import { Client } from '@siteline/nextjs';
 
 Client.init({
   websiteKey: 'siteline_secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxx', // Required
-  endpoint: 'https://api.siteline.io/v1/intake/pageview',     // Optional
+  endpoint: 'https://api.siteline.ai/v1/intake/pageview',     // Optional
   debug: false,                                                // Optional
 });
 ```
@@ -99,7 +99,7 @@ Client.init({
 ```typescript
 type SitelineConfig = {
   websiteKey: string;    // Your Client website key (format: siteline_secret_<32 hex chars>)
-  endpoint?: string;     // Custom API endpoint (default: https://api.siteline.io/v1/intake/pageview)
+  endpoint?: string;     // Custom API endpoint (default: https://api.siteline.ai/v1/intake/pageview)
   debug?: boolean;       // Enable debug logging (default: false)
 };
 ```
@@ -390,9 +390,9 @@ MIT
 
 ## Support
 
-- **GitHub Issues**: [github.com/siteline/siteline-sdk-js/issues](https://github.com/siteline-ai/siteline-sdk-js/issues)
-- **Documentation**: [docs.siteline.io](https://docs.siteline.io)
-- **Repository**: [github.com/siteline/siteline-sdk-js](https://github.com/siteline-ai/siteline-sdk-js)
+- **GitHub Issues**: [github.com/siteline-ai/siteline-sdk-js/issues](https://github.com/siteline-ai/siteline-sdk-js/issues)
+- **Documentation**: [docs.gptrends.io/agent-analytics](https://docs.gptrends.io/agent-analytics)
+- **Repository**: [github.com/siteline-ai/siteline-sdk-js](https://github.com/siteline-ai/siteline-sdk-js)
 
 ## Related Packages
 
