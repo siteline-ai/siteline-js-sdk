@@ -151,7 +151,7 @@ jobs:
   report:
     name: Security Report
     if: always()
-    needs: [dependency-audit, secret-scan, license-check, sbom-generation, scorecard]
+    needs: [dependency-audit, license-check, sbom-generation, scorecard]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -211,7 +211,6 @@ jobs:
             echo ""
             echo "### Results"
             echo "- Dependency Audit: ${{ needs.dependency-audit.result }}"
-            echo "- Secret Scan: ${{ needs.secret-scan.result }}"
             echo "- License Check: ${{ needs.license-check.result }}"
             echo "- SBOM Generation: ${{ needs.sbom-generation.result }}"
             echo "- OSSF Scorecard: ${{ needs.scorecard.result }}"
