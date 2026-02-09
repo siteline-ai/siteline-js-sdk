@@ -52,7 +52,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/siteline-ai/siteline-sdk-js",
+    "url": "git+https://github.com/siteline-ai/siteline-sdk-js.git",
     "directory": "packages/core"
   },
   "bugs": {
