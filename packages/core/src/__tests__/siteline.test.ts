@@ -23,8 +23,13 @@ describe('Siteline', () => {
   });
 
   describe('constructor', () => {
-    it('accepts valid websiteKey', () => {
+    it('accepts valid websiteKey with siteline_secret prefix', () => {
       expect(() => new Siteline({ websiteKey: validKey })).not.toThrow();
+    });
+
+    it('accepts valid websiteKey with gptrends_secret prefix', () => {
+      const gptrendsKey = 'gptrends_secret_' + 'a'.repeat(32);
+      expect(() => new Siteline({ websiteKey: gptrendsKey })).not.toThrow();
     });
 
     it('rejects invalid websiteKey format - wrong prefix', () => {
@@ -91,7 +96,7 @@ describe('Siteline', () => {
       await jest.runAllTimersAsync();
 
       expect(fetchMock).toHaveBeenCalledWith(
-        'https://siteline.ai/v1/intake/pageview',
+        'https://api.gptrends.io/v1/intake/pageview',
         expect.objectContaining({
           method: 'POST',
           headers: {
