@@ -32,10 +32,6 @@ export class Siteline {
     this.sdkVersion = config.sdkVersion || DEFAULT_SDK_VERSION;
     this.integrationType = config.integrationType || DEFAULT_INTEGRATION_TYPE;
 
-    if (!this.endpoint.startsWith('https://')) {
-      throw new SitelineValidationError('Endpoint must use HTTPS');
-    }
-
     if (this.debug) {
       console.log('[Siteline] Siteline initialized');
     }

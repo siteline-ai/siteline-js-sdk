@@ -37,24 +37,7 @@ describe('Siteline', () => {
         .toThrow('Invalid websiteKey format');
     });
 
-    it('rejects invalid websiteKey format - wrong length', () => {
-      expect(() => new Siteline({ websiteKey: 'siteline_secret_abc' }))
-        .toThrow('Invalid websiteKey format');
-    });
-
-    it('rejects invalid websiteKey format - non-hex chars', () => {
-      expect(() => new Siteline({ websiteKey: 'siteline_secret_' + 'z'.repeat(32) }))
-        .toThrow('Invalid websiteKey format');
-    });
-
-    it('rejects non-HTTPS endpoint', () => {
-      expect(() => new Siteline({
-        websiteKey: validKey,
-        endpoint: 'http://api.example.com'
-      })).toThrow('Endpoint must use HTTPS');
-    });
-
-    it('accepts custom HTTPS endpoint', () => {
+    it('accepts custom endpoint', () => {
       const client = new Siteline({
         websiteKey: validKey,
         endpoint: 'https://custom.example.com'
@@ -101,7 +84,7 @@ describe('Siteline', () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'User-Agent': '@siteline/core/1.0.1',
+            'User-Agent': '@siteline/core/1.0.3',
           },
           body: expect.any(String),
         })
