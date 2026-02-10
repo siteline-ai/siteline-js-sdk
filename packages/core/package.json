@@ -1,15 +1,15 @@
 {
   "name": "@siteline/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Core tracking SDK for Siteline - Agent Analytics platform for tracking AI agents, bots, and crawlers",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     }
   },
   "files": [

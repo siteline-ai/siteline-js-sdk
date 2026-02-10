@@ -37,14 +37,17 @@ export class Siteline {
     }
   }
 
-  track(data: PageviewData): void {
+  async track(data: PageviewData): Promise<void> {
     const sanitized = this.sanitize(data);
 
-    void this.send(sanitized).catch((err: Error) => {
+    try {
+      return await this.send(sanitized);
+    } catch (err) {
       if (this.debug) {
-        console.error('[Siteline] Track failed:', err.message);
+        const error = err as Error;
+        console.error('[Siteline] Track failed:', error.message);
       }
-    });
+    }
   }
 
   private sanitize(data: PageviewData): Record<string, unknown> {
@@ -80,7 +83,12 @@ export class Siteline {
 
       if (this.debug) {
         if (res.ok) {
-          console.log('[Siteline] Tracked:', data.url);
+          console.log('[Siteline] Tracked:', data.url, {
+            endpoint: this.endpoint,
+            sdk: this.sdk,
+            sdkVersion: this.sdkVersion,
+            integrationType: this.integrationType,
+          });
         } else {
           console.error('[Siteline] HTTP error:', res.status);
         }

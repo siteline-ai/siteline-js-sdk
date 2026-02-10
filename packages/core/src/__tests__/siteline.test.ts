@@ -84,7 +84,7 @@ describe('Siteline', () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'User-Agent': '@siteline/core/1.0.3',
+            'User-Agent': '@siteline/core/1.0.4',
           },
           body: expect.any(String),
         })
@@ -290,7 +290,12 @@ describe('Siteline', () => {
 
       await jest.runAllTimersAsync();
 
-      expect(consoleLogSpy).toHaveBeenCalledWith('[Siteline] Tracked:', 'https://example.com');
+      expect(consoleLogSpy).toHaveBeenCalledWith('[Siteline] Tracked:', 'https://example.com', {
+        endpoint: 'https://api.gptrends.io/v1/intake/pageview',
+        sdk: '@siteline/core',
+        sdkVersion: '1.0.4',
+        integrationType: 'custom',
+      });
     });
 
     it('logs HTTP errors in debug mode', async () => {
