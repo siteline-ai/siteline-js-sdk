@@ -1,6 +1,6 @@
 {
   "name": "@siteline/nextjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Official Next.js integration for Siteline - automatic AI agent and bot tracking with zero configuration",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
