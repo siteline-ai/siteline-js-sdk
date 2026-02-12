@@ -1,6 +1,6 @@
 export const DEFAULT_ENDPOINT = 'https://api.gptrends.io/v1/intake/pageview';
 export const DEFAULT_SDK_NAME = '@siteline/core';
-export const DEFAULT_SDK_VERSION = '1.0.4';
+export const DEFAULT_SDK_VERSION = '1.0.5';
 export const DEFAULT_INTEGRATION_TYPE = 'custom';
 
 export const WEBSITEKEY_PATTERN = /^(siteline_secret|gptrends_secret)_/;

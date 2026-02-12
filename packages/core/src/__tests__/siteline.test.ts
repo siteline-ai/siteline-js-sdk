@@ -84,7 +84,7 @@ describe('Siteline', () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'User-Agent': '@siteline/core/1.0.4',
+            'User-Agent': '@siteline/core/1.0.5',
           },
           body: expect.any(String),
         })
@@ -271,8 +271,8 @@ describe('Siteline', () => {
 
       const body = JSON.parse(fetchMock.mock.calls[0][1].body);
       expect(body.sdk).toBe('@custom/sdk');
-      expect(body.sdk_version).toBe('2.0.0');
-      expect(body.integration_type).toBe('custom-integration');
+      expect(body.sdkVersion).toBe('2.0.0');
+      expect(body.integrationType).toBe('custom-integration');
     });
 
     it('logs success in debug mode', async () => {
@@ -293,7 +293,7 @@ describe('Siteline', () => {
       expect(consoleLogSpy).toHaveBeenCalledWith('[Siteline] Tracked:', 'https://example.com', {
         endpoint: 'https://api.gptrends.io/v1/intake/pageview',
         sdk: '@siteline/core',
-        sdkVersion: '1.0.4',
+        sdkVersion: '1.0.5',
         integrationType: 'custom',
       });
     });
