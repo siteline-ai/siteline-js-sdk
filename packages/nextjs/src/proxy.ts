@@ -58,7 +58,7 @@ export function withSiteline(
       url: req.url,
       method: req.method,
       status: response.status,
-      duration: performance.now() - startTime,
+      duration: Math.round(performance.now() - startTime),
       userAgent: req.headers.get('user-agent'),
       ref: req.headers.get('referer'),
       ip: extractIP(req.headers),

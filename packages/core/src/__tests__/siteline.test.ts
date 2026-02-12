@@ -84,7 +84,7 @@ describe('Siteline', () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'User-Agent': '@siteline/core/1.0.5',
+            'User-Agent': '@siteline/core/1.0.6',
           },
           body: expect.any(String),
         })
@@ -293,7 +293,7 @@ describe('Siteline', () => {
       expect(consoleLogSpy).toHaveBeenCalledWith('[Siteline] Tracked:', 'https://example.com', {
         endpoint: 'https://api.gptrends.io/v1/intake/pageview',
         sdk: '@siteline/core',
-        sdkVersion: '1.0.5',
+        sdkVersion: '1.0.6',
         integrationType: 'custom',
       });
     });

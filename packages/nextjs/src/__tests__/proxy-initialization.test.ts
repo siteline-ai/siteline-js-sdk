@@ -110,4 +110,32 @@ describe('withSiteline initialization', () => {
       expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
   });
+
+  it('tracks duration as integer milliseconds', async () => {
+    await jest.isolateModulesAsync(async () => {
+      process.env.SITELINE_WEBSITE_KEY = validKey;
+
+      const nowSpy = jest.spyOn(performance, 'now')
+        .mockReturnValueOnce(100.25)
+        .mockReturnValueOnce(103.99);
+      const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+        status: 200,
+      } as Response);
+
+      const { withSiteline } = await import('../proxy');
+
+      const handler = withSiteline();
+      const req = createMockRequest();
+      await handler(req);
+
+      const init = fetchSpy.mock.calls[0][1] as { body?: string };
+      const body = JSON.parse(init.body as string);
+
+      expect(body.duration).toBe(4);
+      expect(Number.isInteger(body.duration)).toBe(true);
+
+      nowSpy.mockRestore();
+    });
+  });
 });
