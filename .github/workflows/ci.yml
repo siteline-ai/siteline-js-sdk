@@ -220,50 +220,6 @@ jobs:
             chore
           requireScope: false
 
-      - name: Check changeset
-        id: changeset
-        run: |
-          if ls .changeset/*.md 2>/dev/null | grep -v README.md >/dev/null; then
-            echo "found=true" >> $GITHUB_OUTPUT
-          else
-            echo "found=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Changeset reminder
-        if: steps.changeset.outputs.found == 'false'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-
-            const botComment = comments.find(comment =>
-              comment.user.type === 'Bot' &&
-              comment.body.includes('Changeset Reminder')
-            );
-
-            if (botComment) return;
-
-            const body = `## Changeset Reminder
-
-            No changeset detected. If this PR includes user-facing changes, add one:
-
-            \`\`\`bash
-            npm run changeset
-            \`\`\`
-
-            **Skip if:** docs only, internal refactor, CI changes`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body
-            });
-
   status:
     name: CI Status
     if: always()

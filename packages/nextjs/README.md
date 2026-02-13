@@ -69,20 +69,10 @@ export const config = {
 | `endpoint` | `string` | No | Custom API endpoint |
 | `debug` | `boolean` | No | Enable debug logging |
 
-## Environment Variables
-
-```bash
-# .env.local
-SITELINE_WEBSITE_KEY=siteline_secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-SITELINE_ENDPOINT=https://api.siteline.ai/v1/intake/pageview  # Optional
-SITELINE_DEBUG=true  # Optional
-```
-
 ## Documentation
 
-- [Full Documentation](https://docs.gptrends.io/agent-analytics)
-- [API Reference](https://api.siteline.ai/docs)
-- [GitHub Repository](https://github.com/siteline-ai/siteline-sdk-js)
+- [Full Documentation](https://docs.gptrends.io/integrations/nextjs)
+- [GitHub Repository](https://github.com/siteline-ai/siteline-js-sdk)
 
 ## Related Packages
 
@@ -90,8 +80,8 @@ SITELINE_DEBUG=true  # Optional
 
 ## Support
 
-- [GitHub Issues](https://github.com/siteline-ai/siteline-sdk-js/issues)
-- Email: support@siteline.ai
+- [GitHub Issues](https://github.com/siteline-ai/siteline-js-sdk/issues)
+- Email: team@siteline.ai
 
 ## License
 

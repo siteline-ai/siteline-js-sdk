@@ -1,6 +1,6 @@
 {
   "name": "@siteline/core",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Core tracking SDK for Siteline - Agent Analytics platform for tracking AI agents, bots, and crawlers",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -21,6 +21,8 @@
     "build": "rollup -c && tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist",
     "dev": "rollup -c -w",
     "clean": "rm -rf dist",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -48,17 +50,17 @@
     "analytics",
     "monitoring"
   ],
-  "author": "Siteline <support@siteline.ai> (https://siteline.ai)",
+  "author": "Siteline <team@siteline.ai> (https://siteline.ai)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteline-ai/siteline-sdk-js.git",
+    "url": "git+https://github.com/siteline-ai/siteline-js-sdk.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/siteline-ai/siteline-sdk-js/issues"
+    "url": "https://github.com/siteline-ai/siteline-js-sdk/issues"
   },
-  "homepage": "https://github.com/siteline-ai/siteline-sdk-js/tree/main/packages/core#readme",
+  "homepage": "https://github.com/siteline-ai/siteline-js-sdk/tree/main/packages/core#readme",
   "engines": {
     "node": ">=18.0.0"
   },

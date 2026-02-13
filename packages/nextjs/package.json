@@ -1,6 +1,6 @@
 {
   "name": "@siteline/nextjs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Official Next.js integration for Siteline - automatic AI agent and bot tracking with zero configuration",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -26,6 +26,8 @@
     "build": "rollup -c && tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist",
     "dev": "rollup -c -w",
     "clean": "rm -rf dist",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -34,7 +36,7 @@
     "publish": "npm publish --access public"
   },
   "dependencies": {
-    "@siteline/core": "^1.0.6"
+    "@siteline/core": "^1.0.7"
   },
   "peerDependencies": {
     "next": ">=13.0.0"
@@ -63,21 +65,21 @@
     "analytics",
     "monitoring"
   ],
-  "author": "Siteline <support@siteline.ai> (https://siteline.ai)",
+  "author": "Siteline <team@siteline.ai> (https://siteline.ai)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/siteline-ai/siteline-sdk-js",
+    "url": "https://github.com/siteline-ai/siteline-js-sdk",
     "directory": "packages/nextjs"
   },
   "bugs": {
-    "url": "https://github.com/siteline-ai/siteline-sdk-js/issues"
+    "url": "https://github.com/siteline-ai/siteline-js-sdk/issues"
   },
-  "homepage": "https://github.com/siteline-ai/siteline-sdk-js/tree/main/packages/nextjs#readme",
+  "homepage": "https://github.com/siteline-ai/siteline-js-sdk/tree/main/packages/nextjs#readme",
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.1",
-    "@types/node": "^20.11.5",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^25.2.3",
     "jest-environment-jsdom": "^30.2.0",
     "next": "*"
   },

@@ -5,7 +5,7 @@ import {
   DEFAULT_SDK_NAME,
   DEFAULT_SDK_VERSION,
   DEFAULT_INTEGRATION_TYPE,
-  WEBSITEKEY_PATTERN,
+  WEBSITE_KEY_REGEX,
   LIMITS,
   TIMEOUT_MS,
 } from './constants';
@@ -19,10 +19,11 @@ export class Siteline {
   private readonly integrationType: string;
 
   constructor(config: SitelineConfig) {
-    if (!config.websiteKey?.match(WEBSITEKEY_PATTERN)) {
-      throw new SitelineValidationError(
-        'Invalid websiteKey format. Expected: siteline_secret_<32 hex chars>'
-      );
+    if (!config.websiteKey) {
+      throw new SitelineValidationError('[Siteline] Missing websiteKey.');
+    }
+    if (!WEBSITE_KEY_REGEX.test(config.websiteKey)) {
+      throw new SitelineValidationError('[Siteline] Invalid websiteKey format.');
     }
 
     this.key = config.websiteKey;

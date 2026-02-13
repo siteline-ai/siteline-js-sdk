@@ -37,10 +37,10 @@ describe('Siteline', () => {
         .toThrow('Invalid websiteKey format');
     });
 
-    it('accepts custom endpoint', () => {
+    it('accepts js endpoint', () => {
       const client = new Siteline({
         websiteKey: validKey,
-        endpoint: 'https://custom.example.com'
+        endpoint: 'https://js.example.com'
       });
       expect(client).toBeInstanceOf(Siteline);
     });
@@ -79,12 +79,12 @@ describe('Siteline', () => {
       await jest.runAllTimersAsync();
 
       expect(fetchMock).toHaveBeenCalledWith(
-        'https://api.gptrends.io/v1/intake/pageview',
+        'https://api.siteline.ai/v1/intake/pageview',
         expect.objectContaining({
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'User-Agent': '@siteline/core/1.0.6',
+            'User-Agent': '@siteline/js/1.0.6',
           },
           body: expect.any(String),
         })
@@ -252,9 +252,9 @@ describe('Siteline', () => {
     it('includes SDK metadata', async () => {
       const client = new Siteline({
         websiteKey: validKey,
-        sdk: '@custom/sdk',
+        sdk: '@js/sdk',
         sdkVersion: '2.0.0',
-        integrationType: 'custom-integration',
+        integrationType: 'js-integration',
       });
 
       client.track({
@@ -270,9 +270,9 @@ describe('Siteline', () => {
       await jest.runAllTimersAsync();
 
       const body = JSON.parse(fetchMock.mock.calls[0][1].body);
-      expect(body.sdk).toBe('@custom/sdk');
+      expect(body.sdk).toBe('@js/sdk');
       expect(body.sdkVersion).toBe('2.0.0');
-      expect(body.integrationType).toBe('custom-integration');
+      expect(body.integrationType).toBe('js-integration');
     });
 
     it('logs success in debug mode', async () => {
@@ -291,10 +291,10 @@ describe('Siteline', () => {
       await jest.runAllTimersAsync();
 
       expect(consoleLogSpy).toHaveBeenCalledWith('[Siteline] Tracked:', 'https://example.com', {
-        endpoint: 'https://api.gptrends.io/v1/intake/pageview',
-        sdk: '@siteline/core',
+        endpoint: 'https://api.siteline.ai/v1/intake/pageview',
+        sdk: '@siteline/js',
         sdkVersion: '1.0.6',
-        integrationType: 'custom',
+        integrationType: 'js',
       });
     });
 

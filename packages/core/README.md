@@ -48,10 +48,10 @@ new Siteline(config: SitelineConfig)
 
 **Configuration Options:**
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `websiteKey` | `string` | Yes | Your Siteline website key |
-| `endpoint` | `string` | No | Custom API endpoint (default: https://api.siteline.ai/v1/intake/pageview) |
+| Option | Type | Required | Description                           |
+|--------|------|----------|---------------------------------------|
+| `websiteKey` | `string` | Yes | Your Siteline website key             |
+| `endpoint` | `string` | No | Custom API endpoint                   |
 | `debug` | `boolean` | No | Enable debug logging (default: false) |
 
 ### track()
@@ -80,14 +80,13 @@ For framework-specific integrations with automatic tracking:
 
 ## Documentation
 
-- [Full Documentation](https://docs.gptrends.io/agent-analytics)
-- [API Reference](https://api.siteline.ai/docs)
-- [GitHub Repository](https://github.com/siteline-ai/siteline-sdk-js)
+- [Full Documentation](https://docs.gptrends.io/integrations/javascript)
+- [GitHub Repository](https://github.com/siteline-ai/siteline-js-sdk)
 
 ## Support
 
-- [GitHub Issues](https://github.com/siteline-ai/siteline-sdk-js/issues)
-- Email: support@siteline.ai
+- [GitHub Issues](https://github.com/siteline-ai/siteline-js-sdk/issues)
+- Email: team@siteline.ai
 
 ## License
 

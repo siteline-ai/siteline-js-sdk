@@ -51,25 +51,11 @@ npm run test
 npm run dev
 ```
 
-## Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes with tests
-4. Run `npm run changeset` for user-facing changes
-5. Submit a pull request
-
-We follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
-
 ## Resources
 
-- **Documentation**: [docs.gptrends.io/agent-analytics](https://docs.gptrends.io/agent-analytics)
-- **API Reference**: [api.siteline.ai/docs](https://api.siteline.ai/docs)
-- **Issues**: [GitHub Issues](https://github.com/siteline-ai/siteline-sdk-js/issues)
-- **Support**: support@siteline.ai
-- **Security**: security@siteline.ai
+- **Documentation**: [docs.gptrends.io](https://docs.gptrends.io/introduction)
+- **Issues**: [GitHub Issues](https://github.com/siteline-ai/siteline-js-sdk/issues)
+- **Support**: team@siteline.ai
 
 ## License
 
