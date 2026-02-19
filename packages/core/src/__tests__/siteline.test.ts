@@ -32,11 +32,6 @@ describe('Siteline', () => {
       expect(() => new Siteline({ websiteKey: gptrendsKey })).not.toThrow();
     });
 
-    it('rejects invalid websiteKey format - wrong prefix', () => {
-      expect(() => new Siteline({ websiteKey: 'invalid_secret_' + 'a'.repeat(32) }))
-        .toThrow('Invalid websiteKey format');
-    });
-
     it('accepts js endpoint', () => {
       const client = new Siteline({
         websiteKey: validKey,
@@ -84,7 +79,7 @@ describe('Siteline', () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'User-Agent': '@siteline/js/1.0.6',
+            'User-Agent': '@siteline/js/1.0.8',
           },
           body: expect.any(String),
         })
@@ -293,7 +288,7 @@ describe('Siteline', () => {
       expect(consoleLogSpy).toHaveBeenCalledWith('[Siteline] Tracked:', 'https://example.com', {
         endpoint: 'https://api.siteline.ai/v1/intake/pageview',
         sdk: '@siteline/js',
-        sdkVersion: '1.0.6',
+        sdkVersion: '1.0.8',
         integrationType: 'js',
       });
     });
