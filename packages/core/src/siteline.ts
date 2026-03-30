@@ -57,6 +57,7 @@ export class Siteline {
       userAgent: data.userAgent ? String(data.userAgent).slice(0, LIMITS.USER_AGENT_MAX_LENGTH) : null,
       ref: data.ref ? String(data.ref).slice(0, LIMITS.REF_MAX_LENGTH) : null,
       ip: data.ip ? String(data.ip).slice(0, LIMITS.IP_MAX_LENGTH) : null,
+      acceptHeader: data.acceptHeader ? String(data.acceptHeader).slice(0, LIMITS.ACCEPT_HEADER_MAX_LENGTH) : null,
       integrationType: this.integrationType.slice(0, LIMITS.INTEGRATION_TYPE_MAX_LENGTH),
       sdk: this.sdk.slice(0, LIMITS.SDK_MAX_LENGTH),
       sdkVersion: this.sdkVersion.slice(0, LIMITS.SDK_VERSION_MAX_LENGTH),

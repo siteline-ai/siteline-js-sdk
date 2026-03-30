@@ -381,6 +381,85 @@ describe('Siteline', () => {
       expect(abortSignal?.aborted).toBe(true);
     });
 
+    it('sends acceptHeader when provided', async () => {
+      const client = new Siteline({ websiteKey: validKey });
+
+      client.track({
+        url: 'https://example.com',
+        method: 'GET',
+        status: 200,
+        duration: 100,
+        userAgent: null,
+        ref: null,
+        ip: null,
+        acceptHeader: 'text/markdown',
+      });
+
+      await jest.runAllTimersAsync();
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+      expect(body.acceptHeader).toBe('text/markdown');
+    });
+
+    it('sends null acceptHeader when not provided', async () => {
+      const client = new Siteline({ websiteKey: validKey });
+
+      client.track({
+        url: 'https://example.com',
+        method: 'GET',
+        status: 200,
+        duration: 100,
+        userAgent: null,
+        ref: null,
+        ip: null,
+      });
+
+      await jest.runAllTimersAsync();
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+      expect(body.acceptHeader).toBeNull();
+    });
+
+    it('sends null acceptHeader when explicitly null', async () => {
+      const client = new Siteline({ websiteKey: validKey });
+
+      client.track({
+        url: 'https://example.com',
+        method: 'GET',
+        status: 200,
+        duration: 100,
+        userAgent: null,
+        ref: null,
+        ip: null,
+        acceptHeader: null,
+      });
+
+      await jest.runAllTimersAsync();
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+      expect(body.acceptHeader).toBeNull();
+    });
+
+    it('truncates acceptHeader to 1024 chars', async () => {
+      const client = new Siteline({ websiteKey: validKey });
+
+      client.track({
+        url: 'https://example.com',
+        method: 'GET',
+        status: 200,
+        duration: 100,
+        userAgent: null,
+        ref: null,
+        ip: null,
+        acceptHeader: 'text/markdown, ' + 'a'.repeat(2000),
+      });
+
+      await jest.runAllTimersAsync();
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+      expect(body.acceptHeader).toHaveLength(1024);
+    });
+
     it('logs track failures in the catch handler when send rejects', async () => {
       const client = new Siteline({ websiteKey: validKey, debug: true });
 

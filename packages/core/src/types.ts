@@ -5,6 +5,7 @@ export type PageviewData = {
   userAgent: string | null;
   ref: string | null;
   ip: string | null;
+  acceptHeader?: string | null;
   // Response
   status: number;
   duration: number;
