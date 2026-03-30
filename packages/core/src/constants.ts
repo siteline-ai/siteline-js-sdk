@@ -1,8 +1,7 @@
 export const DEFAULT_ENDPOINT = 'https://api.siteline.ai/v1/intake/pageview';
 export const DEFAULT_SDK_NAME = '@siteline/js';
-export const DEFAULT_SDK_VERSION = '1.0.6';
+export const DEFAULT_SDK_VERSION = '1.0.8';
 export const DEFAULT_INTEGRATION_TYPE = 'js';
-export const WEBSITE_KEY_REGEX = /^(siteline|gptrends)_secret_[A-Za-z0-9]{32}$/;
 
 export const LIMITS = {
   URL_MAX_LENGTH: 2048,

@@ -5,7 +5,6 @@ import {
   DEFAULT_SDK_NAME,
   DEFAULT_SDK_VERSION,
   DEFAULT_INTEGRATION_TYPE,
-  WEBSITE_KEY_REGEX,
   LIMITS,
   TIMEOUT_MS,
 } from './constants';
@@ -21,9 +20,6 @@ export class Siteline {
   constructor(config: SitelineConfig) {
     if (!config.websiteKey) {
       throw new SitelineValidationError('[Siteline] Missing websiteKey.');
-    }
-    if (!WEBSITE_KEY_REGEX.test(config.websiteKey)) {
-      throw new SitelineValidationError('[Siteline] Invalid websiteKey format.');
     }
 
     this.key = config.websiteKey;
