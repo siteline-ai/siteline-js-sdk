@@ -1,4 +1,4 @@
-import { Siteline } from 'npm:@siteline/core@1.0.9';
+import { Siteline } from 'https://esm.sh/@siteline/core@1.0.9';
 
 type NetlifyContext = {
   next: () => Promise<Response>;
