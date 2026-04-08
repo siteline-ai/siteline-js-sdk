@@ -4,7 +4,7 @@ type NetlifyContext = {
   next: () => Promise<Response>;
 };
 
-const SITELINE_WEBSITE_KEY = 'secret_key_87784a9b1c6b478fa81e63f4381b865b';
+const SITELINE_WEBSITE_KEY = '';
 const SITELINE_DEBUG = false;
 const SITELINE_ENDPOINT = 'https://api.siteline.ai/v1/intake/pageview'
 
