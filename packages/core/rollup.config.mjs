@@ -1,6 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
-import terser from '@rollup/plugin-terser';
+import { terserPlugin } from '../../rollup.terser.mjs';
 
 export default {
   input: 'src/index.ts',
@@ -26,7 +26,7 @@ export default {
       outputToFilesystem: true,
       rootDir: 'src',
     }),
-    terser({
+    terserPlugin({
       compress: {
         passes: 2,
         pure_getters: true,
