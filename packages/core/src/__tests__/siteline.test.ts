@@ -420,6 +420,69 @@ describe('Siteline', () => {
       expect(body.acceptHeader).toBeNull();
     });
 
+    it('sends MCP ingestion payload when isMcp is enabled', async () => {
+      const client = new Siteline({ websiteKey: validKey });
+
+      client.track({
+        url: 'https://example.com/mcp',
+        method: 'POST',
+        status: 200,
+        duration: 123,
+        userAgent: 'node',
+        ref: null,
+        ip: '203.0.113.1',
+        isMcp: true,
+        mcp: {
+          method: 'tools/call',
+          toolName: 'search_docs',
+          transport: 'streamable-http',
+          responseBytes: 2048,
+          argKeys: ['query', 'limit'],
+        },
+      });
+
+      await jest.runAllTimersAsync();
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+      expect(body.isMcp).toBe(true);
+      expect(body.mcp).toEqual({
+        method: 'tools/call',
+        toolName: 'search_docs',
+        transport: 'streamable-http',
+        responseBytes: 2048,
+        argKeys: ['query', 'limit'],
+      });
+    });
+
+    it('sanitizes MCP payload fields and filters empty arg keys', async () => {
+      const client = new Siteline({ websiteKey: validKey });
+
+      client.track({
+        url: 'https://example.com/mcp',
+        method: 'POST',
+        status: 200,
+        duration: 123,
+        userAgent: 'node',
+        ref: null,
+        ip: '203.0.113.1',
+        isMcp: true,
+        mcp: {
+          method: `  ${'x'.repeat(130)}  `,
+          jsonrpcErrorCode: 2147483649,
+          responseBytes: -50,
+          argKeys: ['   query   ', '', '   ', null, 'limit'],
+        },
+      });
+
+      await jest.runAllTimersAsync();
+
+      const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+      expect(body.mcp.method).toHaveLength(100);
+      expect(body.mcp.jsonrpcErrorCode).toBe(2147483647);
+      expect(body.mcp.responseBytes).toBe(0);
+      expect(body.mcp.argKeys).toEqual(['query', 'limit']);
+    });
+
     it('sends null acceptHeader when explicitly null', async () => {
       const client = new Siteline({ websiteKey: validKey });
 

@@ -71,6 +71,34 @@ siteline.track(data: PageviewData)
 | `userAgent` | `string \| null` | Yes | User-Agent header |
 | `ref` | `string \| null` | Yes | Referer header |
 | `ip` | `string \| null` | Yes | Client IP address |
+| `isMcp` | `boolean` | No | Enable MCP ingestion mode for the event |
+| `mcp` | `MCPData` | No | MCP event metadata (`method`, `toolName`, `clientName`, etc.) |
+
+### MCP ingestion
+
+You can send MCP-specific payloads to the same intake endpoint by setting `isMcp: true` and passing an `mcp` object:
+
+```typescript
+siteline.track({
+  url: 'https://example.com/mcp',
+  method: 'POST',
+  status: 200,
+  duration: 120,
+  userAgent: 'node',
+  ref: null,
+  ip: '203.0.113.1',
+  isMcp: true,
+  mcp: {
+    method: 'tools/call',
+    toolName: 'search_docs',
+    clientName: 'ChatGPT',
+    sessionId: 'session-123',
+    transport: 'streamable-http',
+    responseBytes: 2048,
+    argKeys: ['query', 'limit'],
+  },
+});
+```
 
 ## Framework Integrations
 
