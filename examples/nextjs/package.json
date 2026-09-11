@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@siteline/nextjs": "*",
-    "next": "16.3.0-canary.68",
+    "next": "16.3.4",
     "react": "19.2.7",
     "react-dom": "19.2.7"
   },
